@@ -43,9 +43,9 @@ var userList =[
     }
 ];
 
-var score=0;
 function quiz(questions){
     var i=0;
+    var score=0;
     while(i<questions.length){      
     console.log(questions[i].question);
     questions[i].answers.forEach((answer,index) => {
@@ -67,6 +67,10 @@ function game(userList){
     var userName = readLineSync.question("Type your username: ")
     if(userName=='') return;
     score = quiz(questions);
+    console.log("Username(You)".padEnd(20)+"|"+"Score".padEnd(10));
+    console.log("-".repeat(31));
+    console.log(userName.padEnd(20)+'|'+score); 
+    console.log("-".repeat(31));
     for(var i=0;i<userList.length;i++){
         if(userName==userList[i].userName){
             userList[i].score = score;
@@ -74,10 +78,6 @@ function game(userList){
         }
     }
     userList.push({userName: userName, score:score}); 
-    console.log("Username(You)".padEnd(20)+"|"+"Score".padEnd(10));
-    console.log("-".repeat(31));
-    console.log(userName.padEnd(20)+'|'+score); 
-    console.log("-".repeat(31));
 }
 
 function listOfPlayer(userList){
@@ -105,6 +105,15 @@ function highestScorer(userList){
     console.log("-".repeat(31));
 }
 
-game(userList);
-listOfPlayer(userList);
-highestScorer(userList);
+while((expr=readLineSync.question('Type what you wanna do(play|all|highest|exit)? '))!='exit'){
+    switch(expr){
+        case 'play': game(userList);
+            break;
+        case 'all': listOfPlayer(userList);
+            break;
+        case 'highest': highestScorer(userList);
+            break;
+        default:
+            console.log(`Sorry, ${expr} is not a available option`);        
+    }
+}
